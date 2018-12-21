@@ -1,24 +1,28 @@
 package doanhedieuhanh;
 
-public class Producer extends Thread{
-     
-    ProductQueue q;
-    String color;
-     
-    public Producer(ProductQueue q, String color){
-        this.q=q;
-        this.color = color;
-        
-//        this.start();
-    }
-    public void run(){
-            q.putProductIntoQ(color);
-            q.revalidate();
-    }
- 
-}
+public class Producer implements Runnable {
 
-interface ProducerInterface {
-    public void didProduce(boolean isProduced, Product product);
-    public void isAddedToStorage(Producer producer);
+	ProductQueue q;
+
+	public Producer(ProductQueue q) {
+		this.q = q;
+		new Thread(this, "Producer").start();
+//        this.start();
+	}
+
+	public void run() {
+		while (true) {
+			 // producer put items 
+			System.out.println("to producer thread");
+			q.putProductIntoQ("#01579B");
+			q.putProductIntoQ("#76FF03");
+//			q.putProductIntoQ("#E65100");
+	     	try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

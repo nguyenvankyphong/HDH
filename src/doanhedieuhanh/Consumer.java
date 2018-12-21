@@ -9,19 +9,31 @@ package doanhedieuhanh;
  *
  * @author Administrator
  */
-public class Consumer extends Thread{
+public class Consumer implements Runnable {
      
     ProductQueue q;
      
     public Consumer(ProductQueue q){
         this.q=q;
-//        this.start();
+        new Thread(this, "Consumer").start(); 
     }
 
      
     public void run(){
+    	while (true) {
+            // consumer get items 
             q.getProductFromQ();
-            q.revalidate();
+            q.getProductFromQ();
+            q.getProductFromQ();
+            
+            try {
+    			Thread.sleep(2000);
+    		} catch (InterruptedException e) {
+    			e.printStackTrace();
+    		}
+            
+        }
+            
     }
  
 }
